@@ -1,0 +1,324 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html {scroll-behavior: smooth; scroll-snap-type: y mandatory; scrollbar-width: none; -ms-overflow-style: none;}
+
+section {
+    min-height: 100svh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    scroll-snap-align: start;
+    flex-direction: column;
+    position: relative; 
+}
+
+.pic {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    transform: rotate(var(--r));
+    width: var(--w, 180px);
+    height: var(--h, auto);
+    }
+
+.cap {
+    position: absolute;
+    top: var(--y);
+    left: var(--x);
+    transform: rotate(var(--r));
+    font-size: 0.85rem;
+    }
+
+.cake { 
+    cursor: pointer; 
+    user-select: none; transform: rotate(-1deg); 
+    display: flex; 
+    flex-direction: column; align-items: center;
+    position: relative;
+    }
+
+.boom, .reveal, .revealagain {
+    position: absolute;
+    top: 50%; left: 50%;
+    opacity: 0;
+    pointer-events: none;
+}    
+
+.boom {width: 300px;
+    transform: translate(-50%, -50%);    
+}
+
+.reveal {
+    width: 180px;
+    transform: translate(-50%, -70%) rotate(-10deg) scale(0.4);
+    transition: opacity 0.4s, transform 0.5s ease-in-out;
+}
+
+.revealagain {
+    width: 180px;
+    transform: translate(-50%, -70%) rotate(-10deg) scale(0.4);
+    transition: opacity 0.4s, transform 0.5s ease-in-out;
+}
+
+.cake.done .boom { opacity: 1; }
+.cake.done .reveal {opacity: 1; transform: translate(-50%, -70%) rotate(-6deg) scale(1)}
+.cake.done .boom.gone { opacity: 0; transition: opacity 0.4s}
+.candles { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: -6px;}
+.cake.done2 .revealagain {opacity: 1; transform: translate(-50%, -70%) rotate(-6deg) scale(1)}
+
+.candle { width: 11px; height: 44px; background-color: #ff0230; border-radius: 3px; position: relative;}
+
+.flame {
+    position: absolute;
+    top: -12px; left: 50%; 
+    width: 14px; height: 19px; 
+    transform: translateX(-50%) rotate(2deg);
+    background-color: #ffb44b;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: flick 0.5s infinite ease-in-out alternate;
+    }
+
+    @keyframes flick {to {transform: translateX(-50%) rotate(2deg) scale(1.2)}}
+
+.candle.out .flame { opacity: 0; animation: none; transition: opacity 0.5s ease-in-out;}
+
+.layer {
+    width: var(--lw, 180px);
+    height: 70px;
+    border: 5px solid #000;
+    border-radius: 10px;
+    background: var(--bg, #fff);
+    }
+.layer + .layer { margin-top: -5px; }
+
+
+.door_wrap{
+    position: relative;
+    width: 180px;
+    height: 280px;
+    perspective: 800px;
+    flex: 0 0 auto;
+    cursor: pointer;
+    align-self: center;
+}
+
+.door_pic {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.door {
+    position: absolute;
+    inset: 0;
+    background: #6e3306;
+    border: 4px solid #000;
+    border-radius: 5px;
+    transform-origin: left center;
+    transition: transform 0.8s ease-in-out;
+    backface-visibility: hidden;
+}
+
+.door::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    width: 12px;
+    height: 12px;
+    background-color: #000;
+    border-radius: 50%;
+}
+
+.door_wrap.shake {animation: knock 0.23s ease-in-out;}
+
+@keyframes knock {
+    0% { transform: rotate(0deg) translateX(-2px); }
+    25% { transform: rotate(-10deg) translateX(-3px); }
+    50% { transform: rotate(10deg) translateX(-4px); }
+    75% { transform: rotate(-10deg) translateX(-2px); }
+    100% { transform: rotate(0deg) translateX(-3px); }
+}
+
+.door_wrap.open .door {
+    transform: rotateY(-120deg);
+}
+
+.door_pic.increase {
+    transform: scaleY(2.2) scaleX(4) translateY(-20px);
+    transition: transform 0.5s ease-in-out;
+}
+
+.horse_wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+    transform: scaleY(2.2) scaleX(4) translateY(-20px);
+    transition: transform 0.5s ease-in-out;
+}
+
+.horse_move {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 65%;
+    width: 50%;
+    margin: -50% 0 0 -25%;
+    opacity: 0;     
+}
+
+.horse_wrap.move .horse_move {
+    animation: horse 2s ease-in-out forwards;
+}
+
+@keyframes horse {
+    0%   { opacity: 1; transform: translate(260%, 0) rotate(-8deg); }
+    20%  { transform: translate(180%, -25%) rotate(6deg); }
+    40%  { transform: translate(110%, 20%) rotate(-6deg); }
+    60%  { transform: translate(50%, -15%) rotate(4deg); }
+    75%  { transform: translate(0, 0) scale(1.2, 0.8); }
+    85%  { transform: translate(0, -35%) scale(0.9, 1.1); }
+    93%  { transform: translate(0, 0) scale(1.1, 0.9); }
+    100% { opacity: 1; transform: translate(0, 0) rotate(-2deg); }
+}
+
+.present_wrap {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    transform: scaleY(2.2) scaleX(4) translateY(-20px);
+    transition: transform 0.5s ease-in-out;
+}
+
+.present_move {
+    font-family: 'Unkempt', sans-serif;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    line-height: 1.5;
+    position: absolute;
+    top: 15%;
+    left: 35%;
+    height: 35%;
+    width: 75%;
+    margin: -50% 0 0 -25%;
+    opacity: 0;
+}
+
+.present_move2 {
+    font-family: 'Unkempt', sans-serif;
+    font-size: clamp(0.6rem, 2vw, 1rem);
+    line-height: 1.5;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    height: 35%;
+    width: 90%;
+    margin: -50% 0 0 -25%;
+    opacity: 0;
+}
+
+.present_wrap.move .present_move {animation: present 1.5s ease-in-out forwards;}
+.present_wrap.move2 .present_move2 {animation: present 1.5s ease-in-out forwards;}
+
+@keyframes present {
+  0%   { opacity: 1; transform: translate(0, -320%) rotate(-1440deg) scale(0.6); }
+  15%  { transform: translate(8%, -250%)  rotate(-1080deg) scale(0.7); }
+  30%  { transform: translate(-6%, -180%) rotate(-760deg)  scale(0.8); }
+  45%  { transform: translate(5%, -115%)  rotate(-480deg)  scale(0.9); }
+  60%  { transform: translate(-3%, -60%)  rotate(-260deg)  scale(1); }
+  72%  { transform: translate(0, -18%)    rotate(-110deg); }
+  80%  { transform: translate(0, 0)       rotate(-40deg) scale(1.25, 0.75); }
+  88%  { transform: translate(0, -30%)    rotate(-14deg) scale(0.9, 1.15); }
+  94%  { transform: translate(0, 0)       rotate(-4deg)  scale(1.12, 0.88); }
+  100% { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+.wave span {
+    display: inline-block;
+    animation: wavet 2s ease-in-out infinite alternate, rainbow 4s linear infinite;
+    animation-delay: inherit;
+}
+
+.wave2 span {
+    display: inline-block;
+    animation: wavet 2s ease-in-out infinite alternate, rainbow2 4s linear infinite;
+    animation-delay: inherit;
+}
+
+@keyframes wavet {to {transform: translateY(-20px) rotate(-5deg);}}
+
+@keyframes rainbow {
+    0%   { color: #31061d; }
+    25%  { color: #FFD400; }
+    50%  { color: #00E5FF; }
+    75%  { color: #C8FF00; }
+    100% { color: #a1f46d; }
+}
+
+@keyframes rainbow2 {
+    0%   { color: #31061d; }
+    25%  { color: #FFD400; }
+    50%  { color: #670983; }
+    75%  { color: #425302; }
+    100% { color: #317605; }
+}
+
+.sec1 {
+    background-color: #ff8fa3;
+    h1 {transform: rotate(-1.3deg)};
+    p {transform: rotate(1.3deg) }
+}
+.sec2 {
+    background-color: #a3c4f3;
+    h2 {transform: rotate(3deg)}
+    h1 {transform: rotate(-3deg)}
+    p {transform: rotate(2deg)}
+    padding-top: 8vh;
+    gap: 2rem;
+}
+.sec3 {
+    background-color: #b9fbc0;
+    color: #000;
+    h2 {transform: rotate(-1deg)}
+    h1 {transform: rotate(-5deg)}
+    padding-top: 8vh;
+    gap: 2rem;
+}
+.sec4 {
+    background-color: #720026;
+    h2 {transform: rotate(2.3deg)}
+}
+
+body
+    {
+        font-family: 'Unkempt', sans-serif;
+        font-size: clamp(1rem, 3vw, 1.4rem);
+        line-height: 1.5;
+        color: #fff;
+    }
+
+p {
+    max-width: 20ch;     
+    line-height: 1.5;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+}
+
+h1, h2 
+    {
+    font-family: 'Playpen Sans', cursive;
+    font-weight: 600;              
+    line-height: 0.9;
+    }   
+h1 { font-size: clamp(1.6rem, 6vw, 7rem); }
+h2 { font-size: clamp(1.5rem, 5vw, 5rem); }
+body{font-size: clamp(0.5rem, 3.5vw, 3rem); overflow-x: hidden; overflow-y: auto;}
