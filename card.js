@@ -36,10 +36,10 @@ function fitDoor() {
   const wrap = document.querySelector('.door_wrap');
   if (!wrap) return;
   const sec = wrap.closest('section');
-  wrap.style.setProperty('--fit', Math.max(
+  wrap.style.setProperty('--fit', Math.min(4, Math.max(
     sec.clientWidth / wrap.offsetWidth,
     sec.clientHeight / wrap.offsetHeight
-  ));
+  )));
 }
 fitDoor();
 addEventListener('resize', fitDoor);
