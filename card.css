@@ -324,10 +324,6 @@ h2 { font-size: clamp(1.5rem, 5vw, 5rem); }
 body{font-size: clamp(0.5rem, 3.5vw, 3rem); overflow-x: hidden; overflow-y: auto;}
 
 @media (max-width: 600px) {
-  .present_wrap {
-    transform: scaleY(1.6) scaleX(1.8) translateY(-20px);
-  }
-  .door-pic.increase {
-    transform: scale(1.5);
-  }
+  .pic { --w: 30vw; --h: auto; }
+  .pic.right { --x: 62vw; }
 }
