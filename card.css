@@ -324,6 +324,9 @@ h2 { font-size: clamp(1.5rem, 5vw, 5rem); }
 body{font-size: clamp(0.5rem, 3.5vw, 3rem); overflow-x: hidden; overflow-y: auto;}
 
 @media (max-width: 600px) {
-  .pic { --w: 30vw; --h: auto; }
-  .pic.right { --x: 62vw; }
+  .pic {
+    width: 30vw !important;
+    height: auto !important;
+  }
+  .pic.right { left: 60vw; }
 }
