@@ -3,7 +3,6 @@ const candles = candleBox.querySelectorAll('.candle');
 const cake = document.querySelector('.cake');
 const boom = document.querySelector('.boom');
 const doorWrap = document.querySelector('.door_wrap');
-const doorp = document.querySelector('.door_pic');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const horse = document.querySelector('.horse_wrap');
 const present = document.querySelector('.present_wrap');
@@ -32,6 +31,18 @@ function explode() {
   }
   setTimeout(() => boom && boom.classList.add('gone'), 1200);
 }
+
+function fitDoor() {
+  const wrap = document.querySelector('.door_wrap');
+  if (!wrap) return;
+  const sec = wrap.closest('section');
+  wrap.style.setProperty('--fit', Math.max(
+    sec.clientWidth / wrap.offsetWidth,
+    sec.clientHeight / wrap.offsetHeight
+  ));
+}
+fitDoor();
+addEventListener('resize', fitDoor);
 
 candleBox.addEventListener('click', e => {
   const c = e.target.closest('.candle');
@@ -68,7 +79,11 @@ if (doorWrap) {
     }
     doorWrap.classList.add('open');
     sleep(1000).then(() => {
-      if (doorp) doorp.classList.add('increase');
+      fitDoor();
+    doorWrap.classList.add('zoom');
+    });
+    sleep(1200).then(() => {
+      doorWrap.classList.add('zoom');
     });
     sleep(2000).then(() => {
       if (horse) horse.classList.add('move');
@@ -81,6 +96,5 @@ if (doorWrap) {
     });
 });
 };
-
 
 console.log('card.js loaded');
